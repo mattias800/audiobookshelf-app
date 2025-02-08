@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "audiobookshelf-app",
+    "slug": "audiobookshelf-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mattias800.audiobookshelfapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mattias800.audiobookshelfapp"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3302ccb2-9742-4fe8-b2e4-341df829dc16"
+      }
+    },
+    "owner": "mattias800",
+    "updates": {
+      "url": "https://u.expo.dev/3302ccb2-9742-4fe8-b2e4-341df829dc16"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
