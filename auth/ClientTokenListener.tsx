@@ -1,19 +1,13 @@
 import * as React from "react";
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { client } from "@/api/client/client.gen";
 import { BASE_URL } from "@/api/BaseUrl";
 import { useSelector } from "react-redux";
 import { authSlice } from "@/common/redux/auth/AuthSlice";
 
-export interface AuthProviderProps {
-  renderWhenAuth: () => ReactNode;
-  renderWhenNotAuth: () => ReactNode;
-}
+export interface AuthProviderProps {}
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({
-  renderWhenAuth,
-  renderWhenNotAuth,
-}) => {
+export const ClientTokenListener: React.FC<AuthProviderProps> = ({}) => {
   const token = useSelector(authSlice.selectors.token);
 
   useEffect(() => {
@@ -32,5 +26,5 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     }
   }, [token]);
 
-  return <>{token ? renderWhenAuth() : renderWhenNotAuth()}</>;
+  return null;
 };

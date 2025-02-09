@@ -10,12 +10,13 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { AuthProvider } from "@/auth/AuthProvider";
+import { ClientTokenListener } from "@/auth/ClientTokenListener";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import tamaguiConfig from "@/tamagui.config";
 import { TamaguiProvider } from "tamagui";
 import { Provider } from "react-redux";
-import { store } from "@/common/redux/Store"; // Prevent the splash screen from auto-hiding before asset loading is complete.
+import { store } from "@/common/redux/Store";
+import { AuthSwitcher } from "@/auth/AuthSwitcher"; // Prevent the splash screen from auto-hiding before asset loading is complete.
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -47,37 +48,29 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
+      <ClientTokenListener />
       <QueryClientProvider client={queryClient}>
         <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
           <ThemeProvider
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
-            <AuthProvider
-              renderWhenAuth={() => {
-                console.log("renderWhenAuth");
-                return (
-                  <Stack key={"tabs"}>
-                    <Stack.Screen
-                      name="(tabs)"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen name="+not-found" />
-                  </Stack>
-                );
-              }}
-              renderWhenNotAuth={() => {
-                console.log("renderWhenNotAuth");
-                return (
-                  <Stack key={"login"}>
-                    <Stack.Screen
-                      name="login"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen name="+not-found" />
-                  </Stack>
-                );
-              }}
+            <AuthSwitcher
+              render={(isLoggedIn) => (
+                <Stack>
+                  <Stack.Screen
+                    name="(login)"
+                    options={{ headerShown: false }}
+                    redirect={isLoggedIn}
+                  />
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              )}
             />
+
             <StatusBar style="auto" />
           </ThemeProvider>
         </TamaguiProvider>

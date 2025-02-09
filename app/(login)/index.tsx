@@ -7,7 +7,7 @@ export interface IndexProps {}
 
 export const Index: React.FC<IndexProps> = () => {
   return (
-    <ScrollView paddingVertical={"$8"} paddingHorizontal={"$4"}>
+    <ScrollView paddingVertical={"$16"} paddingHorizontal={"$4"}>
       <YStack gap={"$4"}>
         <SizableText size={"$8"}>Welcome to audiobookshelf!</SizableText>
 
