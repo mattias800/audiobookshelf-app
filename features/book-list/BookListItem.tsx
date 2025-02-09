@@ -1,14 +1,20 @@
 import * as React from "react";
 import { Image } from "react-native";
-import { ListItem, SizableText, YGroup } from "tamagui";
+import { ListItem, YGroup } from "tamagui";
 import { ImageSourcePropType } from "react-native/Libraries/Image/Image";
+import { BASE_URL } from "@/api/BaseUrl";
+import { ImageURISource } from "react-native/Libraries/Image/ImageSource";
 
 export interface BookListItemProps {
   onPress?: () => void;
-  image: ImageSourcePropType | undefined;
+  image: ImageSourcePropType;
   name: string;
   author: string;
 }
+
+const fallbackBookUri: ImageURISource = {
+  uri: `${BASE_URL}/audiobookshelf/book_placeholder.jpg`,
+};
 
 export const BookListItem: React.FC<BookListItemProps> = ({
   onPress,
@@ -24,9 +30,13 @@ export const BookListItem: React.FC<BookListItemProps> = ({
           title={name}
           subTitle={author}
           icon={
-            image == null ? undefined : (
-              <Image source={image} width={100} height={100} />
-            )
+            <Image
+              source={image}
+              width={100}
+              height={100}
+              defaultSource={fallbackBookUri}
+              borderRadius={16}
+            />
           }
         />
       </YGroup.Item>
