@@ -23,8 +23,8 @@ export const User: React.FC<UserProps> = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState<string | undefined>(undefined);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("test");
+  const [password, setPassword] = useState("test");
 
   const router = useRouter();
 

@@ -17,6 +17,10 @@ export const ClientTokenListener: React.FC<AuthProviderProps> = ({}) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        fetch: (...args) => {
+          console.log(args[0].url);
+          return fetch(...args);
+        },
       });
     } else {
       client.setConfig({
