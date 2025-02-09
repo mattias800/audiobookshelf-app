@@ -1,7 +1,9 @@
 import * as React from "react";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useCallback, useMemo, useState } from "react";
 import { User } from "@/api/models/User";
 import { AuthContext, AuthContextValue } from "@/auth/AuthContext";
+import { client } from "@/api/client/client.gen";
+import { BASE_URL } from "@/api/BaseUrl";
 
 export interface AuthProviderProps {
   renderWhenAuth: () => ReactNode;
@@ -14,13 +16,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
 
-  console.log("--authuser");
-  console.log(JSON.stringify(user));
+  const onLoggedIn = useCallback((loggedInUser: User) => {
+    client.setConfig({
+      baseUrl: BASE_URL,
+      headers: {
+        Authorization: `Bearer ${loggedInUser.token}`,
+      },
+    });
+    setUser(loggedInUser);
+  }, []);
+
+  const onLoggedOut = useCallback(() => {
+    client.setConfig({
+      baseUrl: BASE_URL,
+      headers: {},
+    });
+    setUser(undefined);
+  }, []);
+
   const v = useMemo<AuthContextValue>(
     () => ({
       user,
-      setAuthUser: (user: User) => setUser(user),
-      clearAuthUser: () => setUser(undefined),
+      setAuthUser: onLoggedIn,
+      clearAuthUser: onLoggedOut,
     }),
     [setUser, user],
   );
