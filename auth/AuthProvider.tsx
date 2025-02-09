@@ -4,20 +4,11 @@ import { User } from "@/api/models/User";
 import { AuthContext, AuthContextValue } from "@/auth/AuthContext";
 import { client } from "@/api/client/client.gen";
 import { BASE_URL } from "@/api/BaseUrl";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export interface AuthProviderProps {
   renderWhenAuth: () => ReactNode;
   renderWhenNotAuth: () => ReactNode;
 }
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60000,
-    },
-  },
-});
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({
   renderWhenAuth,
@@ -54,13 +45,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 
   return (
     <AuthContext.Provider value={v}>
-      {user ? (
-        <QueryClientProvider client={queryClient}>
-          {renderWhenAuth()}
-        </QueryClientProvider>
-      ) : (
-        renderWhenNotAuth()
-      )}
+      {user ? renderWhenAuth() : renderWhenNotAuth()}
     </AuthContext.Provider>
   );
 };
