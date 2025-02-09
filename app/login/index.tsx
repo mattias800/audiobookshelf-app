@@ -16,7 +16,7 @@ export const Index: React.FC<IndexProps> = () => {
         </SizableText>
 
         <Link href={"/server"} asChild>
-          <Button>Lets go</Button>
+          <Button>Let's go</Button>
         </Link>
 
       </YStack>

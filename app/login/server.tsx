@@ -6,14 +6,19 @@ import { Check } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
 import { asyncDelay } from "@/common/async/AsyncDelay";
 import { validateServerUrl } from "@/common/validation/ServerUrlValidator";
+import { useAppDispatch, useAppSelector } from "@/common/redux/ReduxHooks";
+import { authSlice } from "@/common/redux/auth/AuthSlice";
 
 export interface ServerProps {}
 
 export const Server: React.FC<ServerProps> = () => {
+  const initialServerUrl = useAppSelector(authSlice.selectors.serverUrl);
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [message, setMessage] = useState<string | undefined>(undefined);
-  const [server, setServer] = useState("");
+  const [server, setServer] = useState(initialServerUrl ?? "");
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
 
@@ -31,8 +36,11 @@ export const Server: React.FC<ServerProps> = () => {
       if (r.status === 200) {
         setLoading(false);
         setSuccess(true);
+        dispatch(authSlice.actions.setServerUrl(v.serverUrl));
         await asyncDelay(1000);
         router.push("/user");
+        await asyncDelay(1000);
+        setSuccess(false);
       } else {
         setMessage("Server is not reachable.");
       }
@@ -43,7 +51,7 @@ export const Server: React.FC<ServerProps> = () => {
         setMessage("Unknown error.");
       }
     }
-  }, []);
+  }, [server]);
 
   return (
     <ScrollView paddingVertical={"$4"} paddingHorizontal={"$4"}>
@@ -57,8 +65,8 @@ export const Server: React.FC<ServerProps> = () => {
             onChangeText={setServer}
           />
         </YStack>
-        <Button disabled={loading} onPress={onClickContinue}>
-          Lets go
+        <Button disabled={loading || success} onPress={onClickContinue}>
+          Use server
           {loading && <Spinner size="small" color="$green10" />}
           {success && <Check size={"$size.1"} color="$green10" />}
         </Button>

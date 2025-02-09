@@ -9,6 +9,7 @@ export const LoginLayout: React.FC<_layoutProps> = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="server" />
+      <Stack.Screen name="user" />
     </Stack>
   );
 };
