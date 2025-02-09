@@ -47,9 +47,6 @@
     "owner": "mattias800",
     "updates": {
       "url": "https://u.expo.dev/3302ccb2-9742-4fe8-b2e4-341df829dc16"
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
     }
   }
 }

@@ -1,7 +1,7 @@
 import { defineConfig, defaultPlugins } from "@hey-api/openapi-ts";
 
 export default defineConfig({
-  input: "./openapi.json",
+  input: "https://raw.githubusercontent.com/advplyr/audiobookshelf/refs/heads/master/docs/openapi.json",
   output: {
     format: 'prettier',
     lint: 'eslint',
