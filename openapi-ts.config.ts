@@ -1,7 +1,15 @@
-import { defineConfig } from "@hey-api/openapi-ts";
+import { defineConfig, defaultPlugins } from "@hey-api/openapi-ts";
 
 export default defineConfig({
   input: "./openapi.json",
-  output: "src/api/client",
-  plugins: ["@hey-api/client-fetch"],
+  output: {
+    format: 'prettier',
+    lint: 'eslint',
+    path: './api/client',
+  },
+  plugins: [
+    ...defaultPlugins,
+    "@hey-api/client-fetch",
+    "@tanstack/react-query",
+  ],
 });

@@ -2,18 +2,37 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
-import {getLibraries} from "../../api/client/sdk.gen";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { getLibrariesOptions } from "@/api/client/@tanstack/react-query.gen";
 
 export interface LibraryProps {}
 
 export const Library: React.FC<LibraryProps> = () => {
-  const { data, error } = useQuery({
-    ...getLibraries(),
+  const { data, error, isLoading } = useQuery({
+    ...getLibrariesOptions(),
   });
+
+  if (isLoading) {
+    return (
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText>Loading...</ThemedText>
+      </ThemedView>
+    );
+  }
+
+  if (error) {
+    return (
+      <ThemedView style={styles.titleContainer}>
+        <ThemedText>error: {error.message}</ThemedText>
+      </ThemedView>
+    );
+  }
+
   return (
     <ThemedView style={styles.titleContainer}>
-      <ThemedText>Lets go library!</ThemedText>
+      {data?.libraries?.map((library) => (
+        <ThemedText>{library.name}</ThemedText>
+      ))}
     </ThemedView>
   );
 };
