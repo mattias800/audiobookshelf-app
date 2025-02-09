@@ -1,44 +1,25 @@
 import * as React from "react";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
-import { HelloWave } from "@/components/HelloWave";
-import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
+import { Button, ScrollView, SizableText, YStack } from "tamagui";
 
 export interface IndexProps {}
 
 export const Index: React.FC<IndexProps> = () => {
   return (
-    <ThemedView style={styles.titleContainer}>
-      <ThemedText type="title">Welcome to audiobookshelf!</ThemedText>
-      <HelloWave />
+    <ScrollView paddingVertical={"$8"} paddingHorizontal={"$4"}>
+      <YStack gap={"$4"}>
+        <SizableText size={"$8"}>Welcome to audiobookshelf!</SizableText>
 
-      <ThemedText type="title">
-        To start using the app you need to login on an audiobookshelf server.
-      </ThemedText>
+        <SizableText>
+          To start using the app you need to login on an audiobookshelf server.
+        </SizableText>
 
-      <Link href={"/server"}>Lets go</Link>
-    </ThemedView>
+        <Link href={"/server"} asChild>
+          <Button>Lets go</Button>
+        </Link>
+      </YStack>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-});
 
 export default Index;

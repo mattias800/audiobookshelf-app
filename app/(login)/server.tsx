@@ -1,38 +1,30 @@
 import * as React from "react";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
-import { Button, StyleSheet, TextInput } from "react-native";
+import { useCallback, useState } from "react";
+import { Button, Input, Label, ScrollView, Spinner, YStack } from "tamagui";
 
 export interface ServerProps {}
 
 export const Server: React.FC<ServerProps> = () => {
-  return (
-    <ThemedView style={styles.titleContainer}>
-      <ThemedText type="title">Please enter server</ThemedText>
-      <TextInput placeholder={"https://my.server.com"} />
+  const [loading, setLoading] = useState(false);
 
-      <Button title={"Lets go"} />
-    </ThemedView>
+  const onClickContinue = useCallback(() => {
+    setLoading(true);
+  }, []);
+
+  return (
+    <ScrollView paddingVertical={"$8"} paddingHorizontal={"$4"}>
+      <YStack gap={"$4"}>
+        <YStack>
+          <Label htmlFor="server">Please enter server</Label>
+          <Input id={"server"} placeholder={"https://my.server.com"} />
+        </YStack>
+
+        <Button disabled={loading} onPress={onClickContinue}>
+          Lets go {loading && <Spinner size="small" color="$green10" />}
+        </Button>
+      </YStack>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-});
 
 export default Server;

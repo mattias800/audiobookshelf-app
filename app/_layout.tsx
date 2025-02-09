@@ -11,7 +11,9 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { AuthProvider } from "@/auth/AuthProvider";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"; // Prevent the splash screen from auto-hiding before asset loading is complete.
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import tamaguiConfig from "@/tamagui.config";
+import { TamaguiProvider } from "tamagui"; // Prevent the splash screen from auto-hiding before asset loading is complete.
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -43,29 +45,39 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <AuthProvider
-          renderWhenAuth={() => {
-            console.log("renderWhenAuth");
-            return (
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            );
-          }}
-          renderWhenNotAuth={() => {
-            console.log("renderWhenNotAuth");
-            return (
-              <Stack>
-                <Stack.Screen name="(login)" options={{ headerShown: false }} />
-                <Stack.Screen name="+not-found" />
-              </Stack>
-            );
-          }}
-        />
-        <StatusBar style="auto" />
-      </ThemeProvider>
+      <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <AuthProvider
+            renderWhenAuth={() => {
+              console.log("renderWhenAuth");
+              return (
+                <Stack>
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              );
+            }}
+            renderWhenNotAuth={() => {
+              console.log("renderWhenNotAuth");
+              return (
+                <Stack>
+                  <Stack.Screen
+                    name="(login)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen name="+not-found" />
+                </Stack>
+              );
+            }}
+          />
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </TamaguiProvider>
     </QueryClientProvider>
   );
 }
