@@ -38,7 +38,7 @@ export const Server: React.FC<ServerProps> = () => {
         setSuccess(true);
         dispatch(authSlice.actions.setServerUrl(v.serverUrl));
         await asyncDelay(1000);
-        router.push("/user");
+        router.push("/login/user");
         await asyncDelay(1000);
         setSuccess(false);
       } else {

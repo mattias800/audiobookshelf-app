@@ -11,3 +11,5 @@ export const LibraryLayout: React.FC<LibraryLayoutProps> = () => {
     </Stack>
   );
 };
+
+export default LibraryLayout;
