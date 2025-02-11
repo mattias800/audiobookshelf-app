@@ -1,11 +1,13 @@
 import * as React from "react";
 import { useLocalSearchParams } from "expo-router";
-import { ScrollView, Spinner } from "tamagui";
-import { PageHeading } from "@/components/PageHeading";
+import { Spinner } from "tamagui";
 import { useQuery } from "@tanstack/react-query";
 import { getLibraryByIdOptions } from "@/api/client/@tanstack/react-query.gen";
 import { Banner } from "@/components/Banner";
-import {BookList} from "@/features/book-list/BookList";
+import { BookList } from "@/features/book-list/BookList";
+import { SafeAreaView } from "react-native";
+import { Heading } from "@/components/app-ui/core/components/text/Heading";
+import { Box } from "@/components/app-ui/core/components/layout/Box";
 
 export interface LibraryScreenProps {}
 
@@ -33,10 +35,14 @@ export const LibraryScreen: React.FC<LibraryScreenProps> = () => {
   }
 
   return (
-    <ScrollView paddingTop={"$4"}>
-      <PageHeading text={library.name ?? ""} />
+    <SafeAreaView style={{ backgroundColor: "black" }}>
+      <Box indent={1} spacing={1}>
+        <Heading variant={"h1"} color={"white"}>
+          {library.name ?? ""}
+        </Heading>
+      </Box>
       <BookList libraryId={id} />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

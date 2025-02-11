@@ -25,6 +25,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        headerShown: false,
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
@@ -47,6 +48,7 @@ export default function TabLayout() {
         name="library"
         options={{
           title: "Libraries",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="books.vertical" color={color} />
           ),

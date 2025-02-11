@@ -6,7 +6,7 @@ export interface AuthSliceState {
 }
 
 const initialState: AuthSliceState = {
-  serverUrl: "https://audiobookshelf.tacoduck.party/",
+  serverUrl: "https://audiobookshelf.tacoduck.party",
   token: "",
 };
 

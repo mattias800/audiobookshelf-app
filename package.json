@@ -26,6 +26,7 @@
     "@tamagui/lucide-icons": "^1.124.4",
     "@tanstack/react-query": "^5.66.0",
     "expo": "~52.0.31",
+    "expo-audio": "~0.3.4",
     "expo-blur": "~14.0.3",
     "expo-constants": "~17.0.5",
     "expo-dev-client": "~5.0.11",

@@ -33,8 +33,9 @@ export const Server: React.FC<ServerProps> = () => {
 
       setLoading(true);
       const r = await fetch(`${v.serverUrl}/status`);
+      setLoading(false);
+
       if (r.status === 200) {
-        setLoading(false);
         setSuccess(true);
         dispatch(authSlice.actions.setServerUrl(v.serverUrl));
         await asyncDelay(1000);
@@ -45,6 +46,7 @@ export const Server: React.FC<ServerProps> = () => {
         setMessage("Server is not reachable.");
       }
     } catch (e) {
+      setLoading(false);
       if (e instanceof Error) {
         setMessage(e.message);
       } else {
